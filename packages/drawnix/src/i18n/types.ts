@@ -13,6 +13,8 @@ export interface Translations {
   'toolbar.arrow': string;
   'toolbar.shape': string;
   'toolbar.image': string;
+  'toolbar.newCanvas': string;
+  'toolbar.saveAs': string;
   'toolbar.extraTools': string;
 
   'toolbar.pen': string;

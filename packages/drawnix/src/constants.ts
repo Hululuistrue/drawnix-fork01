@@ -44,11 +44,11 @@ export const IMAGE_MIME_TYPES = {
 
 export const MIME_TYPES = {
   json: 'application/json',
-  drawnix: 'application/vnd.drawnix+json',
+  monet: 'application/vnd.monet-drawing+json',
   // image
   ...IMAGE_MIME_TYPES,
 } as const;
 
 export const VERSIONS = {
-  drawnix: 1,
+  monet: 1,
 } as const;

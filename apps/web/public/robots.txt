@@ -5,9 +5,9 @@ content: |-
   User-agent: *
   Allow: /
   
-  # 禁止访问管理后台
+  # Block administrative routes
   Disallow: /admin/
   Disallow: /private/
   
-  # 站点地图
+  # Sitemap location
   Sitemap: https://drawnix.com/sitemap.xml

@@ -7,7 +7,7 @@
 </p>
 <div align="center">
   <h2>
-    开源白板工具（SaaS），一体化白板，包含思维导图、流程图、自由画等
+    Drawnix is an open-source whiteboard SaaS that combines mind maps, flowcharts, and freehand drawing.
   <br />
   </h2>
 </div>
@@ -19,7 +19,7 @@
     </a>
     <figcaption>
       <p align="center">
-        All in one 白板，思维导图、流程图、自由画等
+        All-in-one whiteboard: mind mapping, flowcharts, freehand illustration.
       </p>
     </figcaption>
   </figure>
@@ -27,112 +27,87 @@
     <picture style="width: 250">
       <source media="(prefers-color-scheme: light)" srcset="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=4dcea807fab7468a962c153b07ae4e4e&claim_uid=zmFSY5k8EuZri43&theme=neutral" />
       <source media="(prefers-color-scheme: dark)" srcset="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=4dcea807fab7468a962c153b07ae4e4e&claim_uid=zmFSY5k8EuZri43&theme=dark" />
-      <img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=4dcea807fab7468a962c153b07ae4e4e&claim_uid=zmFSY5k8EuZri43&theme=neutral" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54"/>
+      <img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=4dcea807fab7468a962c153b07ae4e4e&claim_uid=zmFSY5k8EuZri43&theme=neutral" alt="Featured on HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54"/>
     </picture>
   </a>
 
   <br />
 
-  <a href="https://trendshift.io/repositories/13979" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13979" alt="plait-board%2Fdrawnix | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+  <a href="https://trendshift.io/repositories/13979" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13979" alt="plait-board/drawnix on Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
 [*English README*](https://github.com/plait-board/drawnix/blob/develop/README_en.md)
 
-## 特性
+## Highlights
 
-- 💯 免费 + 开源
-- ⚒️ 思维导图、流程图
-- 🖌 画笔
-- 😀 插入图片
-- 🚀 基于插件机制
-- 🖼️ 📃 导出为 PNG, JSON(`.drawnix`)
-- 💾 自动保存（浏览器缓存）
-- ⚡ 编辑特性：撤销、重做、复制、粘贴等
-- 🌌 无限画布：缩放、滚动
-- 🎨 主题模式
-- 📱 移动设备适配
-- 📈 支持 mermaid 语法转流程图
-- ✨ 支持 markdown 文本转思维导图（新支持 🔥🔥🔥）
+- Free and open source
+- Mind maps, flowcharts, and freehand drawing in one workspace
+- Image uploads and media management
+- Plugin-based architecture for deep customization
+- Export to PNG, JPG, and JSON (`.drawnix`)
+- Automatic saving powered by browser storage
+- Rich editing features: undo, redo, copy, paste, and more
+- Infinite canvas with smooth zooming and panning
+- Multiple interface themes including dark mode
+- Mobile-friendly layout
+- Mermaid-to-flowchart conversion
+- Markdown-to-mind-map conversion (latest addition)
 
+## About the Name
 
-## 关于名称
+***Drawnix*** blends ***Draw*** with ***Phoenix***. The phoenix symbolizes creativity that never burns out, while drawing is one of the most direct forms of expression. Every sketch is a chance to rise again—Draw Beyond, Rise Above.
 
-***Drawnix***  ，源于绘画(  ***Draw***  )与凤凰(  ***Phoenix***  )的灵感交织。
+## Powered by the Plait Drawing Framework
 
-凤凰象征着生生不息的创造力，而 *Draw* 代表着人类最原始的表达方式。在这里，每一次创作都是一次艺术的涅槃，每一笔绘画都是灵感的重生。
+Drawnix is built on the open-source Plait drawing framework, a core component of our knowledge base product [PingCode Wiki](https://pingcode.com/product/wiki?utm_source=drawnix). The plugin architecture embraces multiple UI frameworks (Angular, React) and rich-text editors (currently Slate), encouraging a layered structure and reusable plugins that adapt to new whiteboard scenarios.
 
-创意如同凤凰，浴火方能重生，而  ***Drawnix***  要做技术与创意之火的守护者。
-
-*Draw Beyond, Rise Above.*
-
-
-## 与 Plait 画图框架
-
-*Drawnix* 的定位是一个开箱即用、开源、免费的工具产品，它的底层是 *Plait* 框架，*Plait* 是我司开源的一款画图框架，代表着公司在知识库产品([PingCode Wiki](https://pingcode.com/product/wiki?utm_source=drawnix))上的重要技术沉淀。
-
-
-Drawnix 是插件架构，与前面说到开源工具比技术架构更复杂一些，但是插件架构也有优势，比如能够支持多种 UI 框架（*Angular、React*），能够集成不同富文本框架（当前仅支持 *Slate* 框架），在开发上可以很好的实现业务的分层，开发各种细粒度的可复用插件，可以扩展更多的画板的应用场景。
-
-
-## 仓储结构
+## Repository Structure
 
 ```
 drawnix/
 ├── apps/
-│   ├── web                   # drawnix.com
-│   │    └── index.html       # HTML
-├── dist/                     # 构建产物
+│   └── web                 # drawnix.com
+├── dist/                   # build artifacts
 ├── packages/
-│   └── drawnix/              # 白板应用
-│   └── react-board/          # 白板 React 视图层
-│   └── react-text/           # 文本渲染模块
+│   ├── drawnix             # whiteboard application core
+│   ├── react-board         # React view layer
+│   └── react-text          # text rendering module
 ├── package.json
 ├── ...
 └── README.md
 └── README_en.md
-
 ```
 
-## 应用
+## Try It Online
 
-[*https://drawnix.com*](https://drawnix.com) 是 *drawnix* 的最小化应用。
+The hosted edition at [https://drawnix.com](https://drawnix.com) showcases the core Drawnix experience. We will continue shipping rapid updates until the **Dawn** release.
 
-近期会高频迭代 drawnix.com，直到发布 *Dawn（破晓）* 版本。
-
-
-## 开发
+## Development Setup
 
 ```
 npm install
-
 npm run start
 ```
 
-## Docker
+## Docker Image
 
 ```
 docker pull pubuzhixing/drawnix:latest
 ```
 
-## 依赖
+## Key Dependencies
 
-- [plait](https://github.com/worktile/plait) - 开源画图框架
-- [slate](https://github.com/ianstormtaylor/slate)  - 富文本编辑器框架
-- [floating-ui](https://github.com/floating-ui/floating-ui)  - 一个超级好用的创建弹出层基础库
+- [plait](https://github.com/worktile/plait) — open-source drawing framework
+- [slate](https://github.com/ianstormtaylor/slate) — rich text editor framework
+- [floating-ui](https://github.com/floating-ui/floating-ui) — toolkit for floating UI elements
 
+## Contributing
 
+We welcome bug reports, proposals, and pull requests of all sizes—every contribution helps Drawnix improve.
 
-## 贡献
+## Acknowledgements
 
-欢迎任何形式的贡献：
-
-- 提 Bug
-
-- 贡献代码
-
-## 感谢支持
-
-特别感谢公司对开源项目的大力支持，也感谢为本项目贡献代码、提供建议的朋友。
+Thank you to everyone who supports this project and to our company for backing open-source work.
 
 <p align="left">
   <a href="https://pingcode.com?utm_source=drawnix" target="_blank">
@@ -142,4 +117,4 @@ docker pull pubuzhixing/drawnix:latest
 
 ## License
 
-[MIT License](https://github.com/plait-board/drawnix/blob/master/LICENSE)  
+[MIT License](https://github.com/plait-board/drawnix/blob/master/LICENSE)

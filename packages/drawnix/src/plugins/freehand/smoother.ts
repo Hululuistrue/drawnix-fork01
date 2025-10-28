@@ -25,12 +25,12 @@ export class FreehandSmoother {
     smoothing: 0.65,
     velocityWeight: 0.2,
     curvatureWeight: 0.3,
-    minDistance: 0.2, // 降低最小距离阈值
+    minDistance: 0.2, // Lower the minimum distance threshold.
     maxPoints: 8,
     pressureSensitivity: 0.5,
     tiltSensitivity: 0.3,
     velocityThreshold: 800,
-    samplingRate: 5, // 降低采样间隔
+    samplingRate: 5, // Reduce the sampling interval.
   };
 
   private options: Required<SmootherOptions>;
@@ -49,7 +49,7 @@ export class FreehandSmoother {
   ): Point | null {
     const timestamp = data.timestamp ?? Date.now();
 
-    // 第一个点直接返回
+    // Return immediately for the first point.
     if (this.points.length === 0) {
       const strokePoint: StrokePoint = { point, timestamp, ...data };
       this.points.push(strokePoint);
@@ -57,11 +57,11 @@ export class FreehandSmoother {
       return point;
     }
 
-    // 采样率控制 - 确保不会卡住
+    // Sampling guard to avoid stalling.
     if (timestamp - this.lastProcessedTime < this.options.samplingRate) {
       const timeDiff = timestamp - this.lastProcessedTime;
       if (timeDiff < 2) {
-        // 如果时间间隔太小，跳过
+        // Skip if the time delta is too small.
         return null;
       }
     }
@@ -72,24 +72,24 @@ export class FreehandSmoother {
       ...data,
     };
 
-    // 距离检查 - 添加最小距离的动态调整
+    // Distance check with a dynamic threshold.
     const distanceOk = this.checkDistance(point);
     if (!distanceOk && this.points.length > 1) {
-      // 如果距离太近，但时间间隔较大，仍然处理该点
+      // If the distance is tiny but enough time has passed, keep the point.
       const timeDiff = timestamp - this.lastProcessedTime;
       if (timeDiff < 32) {
-        // 32ms ≈ 30fps
+        // 32 ms ≈ 30 fps.
         return null;
       }
     }
 
-    // 更新历史点
+    // Update the historical buffer.
     this.updatePoints(strokePoint);
 
-    // 计算动态参数
+    // Compute dynamic parameters.
     const dynamicParams = this.calculateDynamicParameters(strokePoint);
 
-    // 应用平滑
+    // Apply smoothing.
     const smoothedPoint = this.smooth(point, dynamicParams);
 
     this.lastProcessedTime = timestamp;
@@ -115,7 +115,7 @@ export class FreehandSmoother {
     const lastPoint = this.points[this.points.length - 1].point;
     const distance = this.getDistance(lastPoint, point);
 
-    // 动态最小距离：根据当前速度调整
+    // Adjust the minimum distance based on the current velocity.
     let minDistance = this.options.minDistance;
     if (this.movingAverageVelocity.length > 0) {
       const avgVelocity = this.getAverageVelocity();
@@ -132,18 +132,18 @@ export class FreehandSmoother {
 
     const params = { ...this.options };
 
-    // 压力适应 - 更温和的压力响应
+    // Pressure adaptation for a softer response.
     if (strokePoint.pressure !== undefined) {
       const pressureWeight = Math.pow(strokePoint.pressure, 1.2);
       params.smoothing *= 1 - pressureWeight * params.pressureSensitivity * 0.8;
     }
 
-    // 速度适应 - 更平滑的过渡
+    // Velocity adaptation for smoother transitions.
     const velocityFactor = Math.min(avgVelocity / params.velocityThreshold, 1);
     params.velocityWeight = 0.2 + velocityFactor * 0.3;
     params.smoothing *= 1 + velocityFactor * 0.2;
 
-    // 倾斜适应 - 更温和的响应
+    // Tilt adaptation for gentler changes.
     if (strokePoint.tiltX !== undefined && strokePoint.tiltY !== undefined) {
       const tiltFactor =
         Math.sqrt(strokePoint.tiltX ** 2 + strokePoint.tiltY ** 2) / 90;
@@ -176,16 +176,16 @@ export class FreehandSmoother {
     const lastIndex = this.points.length - 1;
 
     for (let i = 0; i < this.points.length; i++) {
-      // 基础权重 - 使用更温和的衰减
+      // Base weight with gentle decay.
       let weight = Math.pow(params.smoothing, (lastIndex - i) * 0.8);
 
-      // 速度权重 - 更平滑的过渡
+      // Velocity weight for smoother transitions.
       if (i < lastIndex) {
         const velocity = this.getPointVelocity(i);
         weight *= 1 + velocity * params.velocityWeight * 0.8;
       }
 
-      // 曲率权重 - 更温和的影响
+      // Curvature weight with a softer influence.
       if (i > 0 && i < lastIndex) {
         const curvature = this.getPointCurvature(i);
         weight *= 1 + curvature * params.curvatureWeight * 0.7;
@@ -197,7 +197,7 @@ export class FreehandSmoother {
     return weights;
   }
 
-  // 工具方法保持不变
+  // Utility helpers.
   private getDistance(p1: Point, p2: Point): number {
     return distanceBetweenPointAndPoint(p1[0], p1[1], p2[0], p2[1]);
   }
@@ -249,6 +249,6 @@ export class FreehandSmoother {
 
     const s = (a + b + c) / 2;
     const area = Math.sqrt(Math.max(0, s * (s - a) * (s - b) * (s - c)));
-    return (4 * area) / (a * b * c + 0.0001); // 避免除零
+    return (4 * area) / (a * b * c + 0.0001); // Avoid division by zero.
   }
 }

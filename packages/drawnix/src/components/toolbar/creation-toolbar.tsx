@@ -13,6 +13,8 @@ import {
   FeltTipPenIcon,
   ImageIcon,
   ExtraToolsIcon,
+  SaveFileIcon,
+  NewCanvasIcon,
 } from '../icons';
 import { useBoard } from '@plait-board/react-board';
 import {
@@ -42,6 +44,7 @@ import {
 } from '../../hooks/use-drawnix';
 import { ExtraToolsButton } from './extra-tools/extra-tools-button';
 import { addImage } from '../../utils/image';
+import { saveAsJSON } from '../../data/json';
 import { useI18n } from '../../i18n';
 import { SHAPES } from '../shape-picker';
 import { ARROWS } from '../arrow-picker';
@@ -57,7 +60,7 @@ type AppToolButtonProps = {
   name?: string;
   icon: React.ReactNode;
   pointer?: DrawnixPointerType;
-  key?: PopupKey | 'image' | 'extra-tools';
+  key?: PopupKey | 'image' | 'extra-tools' | 'new-canvas' | 'save-as';
 };
 
 const isBasicPointer = (pointer: string) => {
@@ -111,6 +114,16 @@ export const BUTTONS: AppToolButtonProps[] = [
     key: 'image',
   },
   {
+    icon: NewCanvasIcon,
+    titleKey: 'toolbar.newCanvas',
+    key: 'new-canvas',
+  },
+  {
+    icon: SaveFileIcon,
+    titleKey: 'toolbar.saveAs',
+    key: 'save-as',
+  },
+  {
     icon: ExtraToolsIcon,
     titleKey: 'toolbar.extraTools',
     key: 'extra-tools',
@@ -131,7 +144,7 @@ export const isShapePointer = (board: PlaitBoard) => {
 
 export const CreationToolbar = () => {
   const board = useBoard();
-  const { appState } = useDrawnix();
+  const { appState, setAppState } = useDrawnix();
   const { t } = useI18n();
   const setPointer = useSetPointer();
   const container = PlaitBoard.getBoardContainer(board);
@@ -313,6 +326,39 @@ export const CreationToolbar = () => {
           }
           if (button.key === 'extra-tools') {
             return <ExtraToolsButton key={index}></ExtraToolsButton>;
+          }
+          if (button.key === 'new-canvas') {
+            return (
+              <ToolButton
+                key={index}
+                type="icon"
+                visible={true}
+                icon={button.icon}
+                title={button.titleKey ? t(button.titleKey) : ''}
+                aria-label={button.titleKey ? t(button.titleKey) : ''}
+                onClick={() => {
+                  setAppState({
+                    ...appState,
+                    openCleanConfirm: true,
+                  });
+                }}
+              />
+            );
+          }
+          if (button.key === 'save-as') {
+            return (
+              <ToolButton
+                key={index}
+                type="icon"
+                visible={true}
+                icon={button.icon}
+                title={button.titleKey ? t(button.titleKey) : ''}
+                aria-label={button.titleKey ? t(button.titleKey) : ''}
+                onClick={() => {
+                  saveAsJSON(board);
+                }}
+              />
+            );
           }
           return (
             <ToolButton

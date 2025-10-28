@@ -11,6 +11,8 @@ const arTranslations: Translations = {
     "toolbar.arrow": "سهم — A",
     "toolbar.shape": "أشكال",
     "toolbar.image": "صورة — Cmd+U",
+    "toolbar.newCanvas": "New Canvas",
+    "toolbar.saveAs": "Save As…",
     "toolbar.extraTools": "أدوات إضافية",
 
     "toolbar.arrow.straight": "سهم مستقيم",
@@ -67,7 +69,7 @@ const arTranslations: Translations = {
 
     // Language
     "language.switcher": "اللغة",
-    "language.chinese": "中文",
+    "language.chinese": "Chinese",
     "language.english": "English",
     "language.russian": "Русский",
     "language.arabic": "عربي",
@@ -82,7 +84,7 @@ const arTranslations: Translations = {
     "menu.github": "غيت هب",
 
     // Dialog translations
-    "dialog.mermaid.title": "من Mermaid إلى Drawnix",
+    "dialog.mermaid.title": "من Mermaid إلى Monet-Drawing",
     "dialog.mermaid.description": "يدعم حاليًا",
     "dialog.mermaid.flowchart": "المخططات الانسيابية",
     "dialog.mermaid.sequence": "مخططات التسلسل",
@@ -100,8 +102,8 @@ const arTranslations: Translations = {
     "dialog.error.loadMermaid": "فشل في تحميل مكتبة Mermaid",
 
     // Extra tools menu items
-    "extraTools.mermaidToDrawnix": "من Mermaid إلى Drawnix",
-    "extraTools.markdownToDrawnix": "من Markdown إلى Drawnix",
+    "extraTools.mermaidToDrawnix": "من Mermaid إلى Monet-Drawing",
+    "extraTools.markdownToDrawnix": "من Markdown إلى Monet-Drawing",
 
     // Clean confirm dialog
     "cleanConfirm.title": "مسح اللوحة",

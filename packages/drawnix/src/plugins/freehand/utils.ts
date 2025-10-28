@@ -114,23 +114,23 @@ export function gaussianSmooth(
   const halfWindow = Math.floor(windowSize / 2);
   const smoothedPoints: Point[] = [];
 
-  // 方法1：端点镜像
+  // Approach 1: mirror points beyond each end of the polyline.
   function getMirroredPoint(idx: number): Point {
     if (idx < 0) {
-      // 左端镜像
+      // Mirror the left edge.
       const mirrorIdx = -idx - 1;
       if (mirrorIdx < points.length) {
-        // 以第一个点为中心的对称点
+        // Reflect around the first point.
         return [
           2 * points[0][0] - points[mirrorIdx][0],
           2 * points[0][1] - points[mirrorIdx][1],
         ];
       }
     } else if (idx >= points.length) {
-      // 右端镜像
+      // Mirror the right edge.
       const mirrorIdx = 2 * points.length - idx - 1;
       if (mirrorIdx >= 0) {
-        // 以最后一个点为中心的对称点
+        // Reflect around the final point.
         return [
           2 * points[points.length - 1][0] - points[mirrorIdx][0],
           2 * points[points.length - 1][1] - points[mirrorIdx][1],
@@ -140,9 +140,9 @@ export function gaussianSmooth(
     return points[idx];
   }
 
-  // 方法2：自适应窗口
+  // Approach 2: adjust the window size near the edges.
   function getAdaptiveWindow(i: number): number {
-    // 端点处使用较小的窗口
+    // Narrow the window when approaching each boundary.
     const distToEdge = Math.min(i, points.length - 1 - i);
     return Math.min(halfWindow, distToEdge + Math.floor(halfWindow / 2));
   }
@@ -152,19 +152,18 @@ export function gaussianSmooth(
     let sumY = 0;
     let weightSum = 0;
 
-    // 对端点使用自适应窗口
+    // Use an adaptive window for endpoints.
     const adaptiveWindow = getAdaptiveWindow(i);
 
     for (let j = -adaptiveWindow; j <= adaptiveWindow; j++) {
       const idx = i + j;
       const point = getMirroredPoint(idx);
 
-      // 端点处使用渐变权重
+      // Apply a gradient weight at the endpoints.
       let weight = gaussianWeight(j, sigma);
 
-      // 端点权重调整
+      // Slightly boost the original endpoint values.
       if (i < halfWindow || i >= points.length - halfWindow) {
-        // 增加端点原始值的权重
         const edgeFactor = 1 + 0.5 * (1 - Math.abs(j) / adaptiveWindow);
         weight *= j === 0 ? edgeFactor : 1;
       }
@@ -174,12 +173,9 @@ export function gaussianSmooth(
       weightSum += weight;
     }
 
-    // 端点处的特殊处理
     if (i === 0 || i === points.length - 1) {
-      // 保持端点不变
       smoothedPoints.push([points[i][0], points[i][1]]);
     } else {
-      // 平滑中间点
       smoothedPoints.push([sumX / weightSum, sumY / weightSum]);
     }
   }

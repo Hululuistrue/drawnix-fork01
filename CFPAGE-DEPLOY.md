@@ -1,48 +1,49 @@
-## 
+## Cloudflare Pages Deployment
 
-### 1. 打开 Cloudflare Pages
-访问：https://dash.cloudflare.com/pages
+### 1. Open Cloudflare Pages
+Visit https://dash.cloudflare.com/pages.
 
-### 2. 创建项目
-- 点击 **"Create a project"**
-- 选择 **"Connect to Git"**
-- 选择您的 GitHub 仓库
+### 2. Create a Project
+- Select **Create a project**
+- Choose **Connect to Git**
+- Pick your GitHub repository
 
-### 3. 配置构建设置
-在可视化界面中填写：
+### 3. Configure the Build
+Fill out the visual form with:
 
 ```
 Framework preset: None
 Build command: npm run build:web
 Build output directory: dist/apps/web
-Root directory: (留空)
+Root directory: (leave empty)
 ```
 
-在 **Environment variables** 部分添加：
+Add an entry under **Environment variables**:
+
 ```
 NODE_VERSION = 20
 ```
 
-### 4. 点击 "Save and Deploy"
-就这么简单！
+### 4. Save and Deploy
+Click **Save and Deploy**. That is all it takes.
 
-## 项目已包含的配置文件
+## Included Configuration Files
 
-- `apps/web/public/_redirects` - SPA 路由支持
-- `apps/web/public/_headers` - 基本缓存配置
-- `package.json` 中的 `build:web` 脚本
+- `apps/web/public/_redirects` – SPA routing support
+- `apps/web/public/_headers` – basic cache headers
+- `package.json` `build:web` script – triggers the web build
 
-##  部署后检查
+## Post-Deployment Checklist
 
-1. 访问分配的 `.pages.dev` 域名
-2. 确认网站正常运行
-3. 测试页面刷新是否正常（SPA 路由）
+1. Open the assigned `.pages.dev` domain
+2. Confirm the site renders as expected
+3. Refresh a few routes to ensure SPA navigation works
 
-## 自定义域名（可选）
+## Optional: Custom Domains
 
-部署成功后，在 Cloudflare Pages 项目中：
-1. 点击 **"Custom domains"**
-2. 添加您的域名
-3. 按提示配置 DNS
+After the first deployment:
+1. Open **Custom domains** in your Pages project
+2. Add your domain name
+3. Follow the DNS instructions provided by Cloudflare
 
-就是这么简单！无需复杂的配置文件。
+No additional configuration files are required.

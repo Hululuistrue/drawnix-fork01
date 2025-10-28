@@ -36,7 +36,7 @@ const MERMAID_EXAMPLE =
 
 const MermaidToDrawnix = () => {
   const { appState, setAppState } = useDrawnix();
-  const { t, language } = useI18n();
+  const { t } = useI18n();
   const [mermaidToDrawnixLib, setMermaidToDrawnixLib] =
     useState<MermaidToDrawnixLibProps>({
       loaded: false,
@@ -127,67 +127,31 @@ const MermaidToDrawnix = () => {
   return (
     <>
       <div className="ttd-dialog-desc">
-        {language === 'zh' ? (
-          <>
-            {t('dialog.mermaid.description')}
-            {' '}
-            <a
-              href="https://mermaid.js.org/syntax/flowchart.html"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t('dialog.mermaid.flowchart')}
-            </a>
-            、
-            <a
-              href="https://mermaid.js.org/syntax/sequenceDiagram.html"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t('dialog.mermaid.sequence')}
-            </a>
-            {' '}
-            和
-            {' '}
-            <a
-              href="https://mermaid.js.org/syntax/classDiagram.html"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t('dialog.mermaid.class')}
-            </a>
-            {t('dialog.mermaid.otherTypes')}
-          </>
-        ) : (
-          <>
-            {t('dialog.mermaid.description')}
-            {' '}
-            <a
-              href="https://mermaid.js.org/syntax/flowchart.html"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t('dialog.mermaid.flowchart')}
-            </a>
-            ,{' '}
-            <a
-              href="https://mermaid.js.org/syntax/sequenceDiagram.html"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t('dialog.mermaid.sequence')}
-            </a>
-            ,{' '}
-            <a
-              href="https://mermaid.js.org/syntax/classDiagram.html"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t('dialog.mermaid.class')}
-            </a>
-            {t('dialog.mermaid.otherTypes')}
-          </>
-        )}
+        {t('dialog.mermaid.description')}{' '}
+        <a
+          href="https://mermaid.js.org/syntax/flowchart.html"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t('dialog.mermaid.flowchart')}
+        </a>
+        ,{' '}
+        <a
+          href="https://mermaid.js.org/syntax/sequenceDiagram.html"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t('dialog.mermaid.sequence')}
+        </a>
+        ,{' '}
+        <a
+          href="https://mermaid.js.org/syntax/classDiagram.html"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t('dialog.mermaid.class')}
+        </a>
+        {t('dialog.mermaid.otherTypes')}
       </div>
       <TTDDialogPanels>
         <TTDDialogPanel label={t('dialog.mermaid.syntax')}>

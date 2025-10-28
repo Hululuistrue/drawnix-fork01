@@ -97,7 +97,7 @@ export const withPinchZoom = (board: PlaitBoard) => {
         ...p1.currentPoint,
         ...p2.currentPoint
       );
-      // zoom 处理
+      // Handle zooming.
       const scale = currentDistance / lastDistance;
 
       const v1 = [
@@ -115,11 +115,10 @@ export const withPinchZoom = (board: PlaitBoard) => {
 
       const cosTheta = dotProduct / (v1Magnitude * v2Magnitude || 1);
 
-      // 控制缩放
-      // 基于余弦相似度（Cosine Similarity）
-      // 余弦值 > 0.8：判定为平移手势（向量基本同向）
-      // 余弦值 < -0.7：判定为缩放手势（向量基本反向）
-      // 其他情况：未知手势
+      // Decide whether to zoom using cosine similarity.
+      // cosTheta > 0.8  → treat as a pan gesture (vectors aligned).
+      // cosTheta < -0.7 → treat as a zoom gesture (vectors opposed).
+      // Otherwise the gesture is ambiguous.
       if (cosTheta < -0.7 || (cosTheta <= 0.8 && isPinching && scale >= 0.01)) {
         isPinching = true;
       } else {

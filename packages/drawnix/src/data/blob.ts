@@ -50,7 +50,7 @@ export const normalizeFile = async (file: File) => {
     if (file?.name?.endsWith('.drawnix')) {
       file = createFile(
         await blobToArrayBuffer(file),
-        MIME_TYPES.drawnix,
+        MIME_TYPES.monet,
         file.name
       );
     }

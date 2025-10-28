@@ -33,11 +33,11 @@
   --color-icon-white: #{$oc-white};
 
   --color-primary: #6698ff;
-  --color-primary-darker: #4a7ee6;    // 降低亮度和饱和度
-  --color-primary-darkest: #3366cc;   // 进一步降低亮度
-  --color-primary-light: #e6f0ff;     // 提高亮度，降低饱和度
-  --color-primary-light-darker: #cce0ff;  // light 的稍暗版本
-  --color-primary-hover: #80acff;     // 略微提高亮度的互动状态
+  --color-primary-darker: #4a7ee6;    // Lower lightness and saturation
+  --color-primary-darkest: #3366cc;   // Further reduce lightness
+  --color-primary-light: #e6f0ff;     // Increase lightness, reduce saturation
+  --color-primary-light-darker: #cce0ff;  // Slightly darker version of the light tone
+  --color-primary-hover: #80acff;     // Slightly brighter hover state
 
   --button-hover-bg: var(--color-surface-high);
   --button-active-bg: var(--color-surface-high);

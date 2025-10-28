@@ -48,8 +48,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@plait': path.resolve(__dirname, 'src'), // 根据项目结构调整路径
-      'react-text': path.resolve(__dirname, 'packages/react-text/src'), // 配置 lib 包的别名
+      '@plait': path.resolve(__dirname, 'src'), // Adjust path to match the project layout
+      'react-text': path.resolve(__dirname, 'packages/react-text/src'), // Alias for the library package
     },
   },
 });

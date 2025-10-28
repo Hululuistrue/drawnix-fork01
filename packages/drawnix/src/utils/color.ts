@@ -1,12 +1,12 @@
 import { DEFAULT_COLOR } from '@plait/core';
 import { TRANSPARENT, NO_COLOR, WHITE } from '../constants/color';
 
-// 将 0-100 的透明度转换为 0-255 的整数
+// Convert an opacity value in the range 0-100 to an alpha value in the range 0-255.
 function transparencyToAlpha255(transparency: number) {
   return Math.round(((100 - transparency) / 100) * 255);
 }
 
-// 将 0-255 的 alpha 值转换为 0-100 的透明度
+// Convert an alpha value in the range 0-255 to an opacity value in the range 0-100.
 function alpha255ToTransparency(alpha255: number) {
   return Math.round((1 - alpha255 / 255) * 100);
 }
@@ -18,18 +18,18 @@ export function applyOpacityToHex(hexColor: string, opacity: number) {
 }
 
 export function hexAlphaToOpacity(hexColor: string) {
-  // 移除可能存在的 # 前缀
+  // Remove a leading # if present.
   hexColor = hexColor.replace(/^#/, '');
 
   let alpha;
   if (hexColor.length === 8) {
-    // 8位十六进制，提取最后两位作为 alpha 值
+    // Eight-digit hex: use the last two digits as the alpha channel.
     alpha = parseInt(hexColor.slice(6, 8), 16);
   } else if (hexColor.length === 4) {
-    // 4位十六进制（简写形式），提取最后一位并重复
+    // Four-digit shorthand hex: repeat the last digit to form the alpha channel.
     alpha = parseInt(hexColor.slice(3, 4).repeat(2), 16);
   } else {
-    // 如果没有 alpha 通道，则认为是完全不透明
+    // No alpha channel means the color is fully opaque.
     return 100;
   }
 
@@ -44,17 +44,17 @@ export function isValidColor(color: string) {
 }
 
 export function removeHexAlpha(hexColor: string) {
-  // 移除可能存在的 # 前缀，并转换为大写
+  // Remove an optional leading # and normalize to uppercase.
   const hexColorClone = hexColor.replace(/^#/, '').toUpperCase();
 
   if (hexColorClone.length === 8) {
-    // 8位十六进制，移除最后两位
+    // Eight-digit hex: drop the final two characters.
     return '#' + hexColorClone.slice(0, 6);
   } else if (hexColorClone.length === 4) {
-    // 4位十六进制（简写形式），移除最后一位
+    // Four-digit shorthand hex: drop the final character.
     return '#' + hexColorClone.slice(0, 3);
   } else if (hexColorClone.length === 6 || hexColorClone.length === 3) {
-    // 已经是标准的 6 位或 3 位形式，直接返回
+    // Already a standard six or three character hex code.
     return '#' + hexColorClone;
   } else {
     return hexColor;

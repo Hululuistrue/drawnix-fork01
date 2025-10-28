@@ -9,6 +9,8 @@ const enTranslations: Translations = {
   'toolbar.arrow': 'Arrow — A',
   'toolbar.shape': 'Shape',
   'toolbar.image': 'Image — Cmd+U',
+  'toolbar.newCanvas': 'New Canvas',
+  'toolbar.saveAs': 'Save As…',
   'toolbar.extraTools': 'Extra Tools',
 
   'toolbar.pen': 'Pen — P',
@@ -67,10 +69,10 @@ const enTranslations: Translations = {
 
   // Language
   'language.switcher': 'Language',
-  'language.chinese': '中文',
+  'language.chinese': 'Chinese',
   'language.english': 'English',
-  'language.russian': 'Русский',
-  'language.arabic': 'عربي',
+  'language.russian': 'Russian',
+  'language.arabic': 'Arabic',
   // Menu items
   'menu.open': 'Open',
   'menu.saveFile': 'Save File',
@@ -81,7 +83,7 @@ const enTranslations: Translations = {
   'menu.github': 'GitHub',
 
   // Dialog translations
-  'dialog.mermaid.title': 'Mermaid to Drawnix',
+  'dialog.mermaid.title': 'Mermaid to Monet-Drawing',
   'dialog.mermaid.description': 'Currently supports',
   'dialog.mermaid.flowchart': 'flowcharts',
   'dialog.mermaid.sequence': 'sequence diagrams',
@@ -101,8 +103,8 @@ const enTranslations: Translations = {
   'dialog.error.loadMermaid': 'Failed to load Mermaid library',
 
   // Extra tools menu items
-  'extraTools.mermaidToDrawnix': 'Mermaid to Drawnix',
-  'extraTools.markdownToDrawnix': 'Markdown to Drawnix',
+  'extraTools.mermaidToDrawnix': 'Mermaid to Monet-Drawing',
+  'extraTools.markdownToDrawnix': 'Markdown to Monet-Drawing',
 
   // Clean confirm dialog
   'cleanConfirm.title': 'Clear Board',
@@ -164,7 +166,7 @@ const enTranslations: Translations = {
   'mind.centralText': 'Central Topic',
   'mind.abstractNodeText': 'Summary',
 
-  'tutorial.title': 'Drawnix',
+  'tutorial.title': 'Monet-Drawing',
   'tutorial.description': 'All-in-one whiteboard, including mind maps, flowcharts, free drawing, and more',
   'tutorial.dataDescription': 'All data is stored locally in your browser',
   'tutorial.appToolbar': 'Export, language settings, ...',

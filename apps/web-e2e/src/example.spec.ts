@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('has title', async ({ page }) => {
   await page.goto('/');
 
-  // Expect h1 to contain a substring.
-  expect(await page.title()).toContain('Drawnix - 开源白板工具');
+  // Expect the page title to include the brand name.
+  await expect(page).toHaveTitle(/Drawnix - Open Source Whiteboard/);
   expect(page.locator('drawnix')).toBeTruthy();
 });

@@ -51,7 +51,7 @@ export class ImageViewer {
     this.bindEvents();
   }
 
-  // 打开图片查看器
+  // Open the image viewer overlay.
   open(src: string, alt = ''): void {
     this.createOverlay();
     this.createImage(src, alt);
@@ -59,24 +59,24 @@ export class ImageViewer {
     document.body.style.overflow = 'hidden';
   }
 
-  // 关闭图片查看器
+  // Close the viewer and clean up listeners.
   close(): void {
     if (this.overlay) {
-      // 清理拖动事件监听器
+      // Remove drag listeners.
       this.cleanupDragEvents();
-      
-      // 清理全局事件监听器
+
+      // Remove global listeners.
       document.removeEventListener('mousemove', this.delegationHandler!);
       document.removeEventListener('mouseup', this.delegationHandler!);
       document.removeEventListener('keydown', this.delegationHandler!);
       document.removeEventListener('wheel', this.delegationHandler!);
-      
-      // 取消动画帧
+
+      // Cancel any scheduled animation frame.
       if (this.animationFrameId) {
         cancelAnimationFrame(this.animationFrameId);
         this.animationFrameId = null;
       }
-      
+
       document.body.removeChild(this.overlay);
       this.overlay = null;
       this.image = null;
@@ -91,7 +91,7 @@ export class ImageViewer {
     document.body.style.overflow = '';
   }
 
-  // 创建遮罩层
+  // Create the fullscreen overlay container.
   private createOverlay(): void {
     this.overlay = document.createElement('div');
     this.overlay.style.cssText = `
@@ -108,7 +108,7 @@ export class ImageViewer {
       cursor: grab;
     `;
 
-    // 点击遮罩层关闭
+    // Close when clicking the backdrop.
     this.overlay.addEventListener('click', (e) => {
       if (e.target === this.overlay) {
         this.close();
@@ -120,7 +120,7 @@ export class ImageViewer {
     document.body.appendChild(this.overlay);
   }
 
-  // 创建关闭按钮
+  // Add the close button.
   private createCloseButton(): void {
     this.closeButton = document.createElement('div');
     this.closeButton.innerHTML = '×';
@@ -129,160 +129,83 @@ export class ImageViewer {
     this.overlay!.appendChild(this.closeButton);
   }
 
-  // 创建控制按钮
+  // Create zoom controls.
   private createControls(): void {
     this.controlsContainer = document.createElement('div');
     this.controlsContainer.style.cssText = `
       position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 40px;
       display: flex;
-      gap: 10px;
-      z-index: 10001;
+      gap: 12px;
+      z-index: 10000;
     `;
 
-    this.addStyles();
+    const controls = [
+      { label: '+', onClick: () => this.zoomIn() },
+      { label: '−', onClick: () => this.zoomOut() },
+      { label: 'Reset', onClick: () => this.resetState() },
+    ];
 
-    // 放大按钮
-    const zoomInBtn = document.createElement('button');
-    zoomInBtn.innerHTML = '+';
-    zoomInBtn.className = 'image-viewer-control-btn';
-    zoomInBtn.addEventListener('click', () => this.zoomIn());
+    controls.forEach(({ label, onClick }) => {
+      const button = document.createElement('button');
+      button.className = 'image-viewer-control-btn';
+      button.textContent = label;
+      button.addEventListener('click', onClick);
+      this.controlsContainer!.appendChild(button);
+    });
 
-    // 缩小按钮
-    const zoomOutBtn = document.createElement('button');
-    zoomOutBtn.innerHTML = '-';
-    zoomOutBtn.className = 'image-viewer-control-btn';
-    zoomOutBtn.addEventListener('click', () => this.zoomOut());
-
-    // 重置按钮
-    const resetBtn = document.createElement('button');
-    resetBtn.innerHTML = '⌂';
-    resetBtn.className = 'image-viewer-control-btn';
-    resetBtn.addEventListener('click', () => this.resetState());
-
-    this.controlsContainer.appendChild(zoomOutBtn);
-    this.controlsContainer.appendChild(resetBtn);
-    this.controlsContainer.appendChild(zoomInBtn);
     this.overlay!.appendChild(this.controlsContainer);
   }
 
-  // 创建图片元素
-  private  createImage(src: string, alt: string): void {
+  private createImage(src: string, alt: string): void {
     this.imageContainer = document.createElement('div');
     this.imageContainer.style.cssText = `
-      position: relative;
+      display: inline-flex;
+      max-width: 90%;
+      max-height: 90%;
       cursor: grab;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: calc(100vw - 80px);
-      max-height: calc(100vh - 160px);
+      transition: transform 0.1s ease-out;
     `;
+    this.imageContainer.addEventListener('mousedown', (event) =>
+      this.onMouseDown(event)
+    );
 
     this.image = document.createElement('img');
     this.image.src = src;
     this.image.alt = alt;
-    this.image.style.cssText = `
-      max-width: calc(100vw - 80px);
-      max-height: calc(100vh - 160px);
-      width: auto;
-      height: auto;
-      display: block;
-      user-select: none;
-      pointer-events: none;
-      object-fit: contain;
-    `;
+    this.image.style.maxWidth = '100%';
+    this.image.style.maxHeight = '100%';
+    this.image.style.userSelect = 'none';
+    this.image.style.pointerEvents = 'none';
 
     this.imageContainer.appendChild(this.image);
     this.overlay!.appendChild(this.imageContainer);
-
-    // 绑定拖拽事件
-    this.bindDragEvents();
   }
 
-  // 绑定拖拽事件
-  private bindDragEvents(): void {
-    if (!this.imageContainer) return;
-
-    // 使用 requestAnimationFrame 优化的拖动处理器
-    this.dragHandler = (e: MouseEvent) => {
-      if (!this.state.isDragging) return;
-
-      const deltaX = e.clientX - this.state.dragStartX;
-      const deltaY = e.clientY - this.state.dragStartY;
-
-      this.state.x = this.state.imageStartX + deltaX;
-      this.state.y = this.state.imageStartY + deltaY;
-
-      // 使用 requestAnimationFrame 优化渲染
-      if (!this.pendingUpdate) {
-        this.pendingUpdate = true;
-        this.animationFrameId = requestAnimationFrame(() => {
-          this.updateImageTransform();
-          this.pendingUpdate = false;
-        });
-      }
-    };
-
-    this.mouseUpHandler = () => {
-      if (this.state.isDragging) {
-        this.state.isDragging = false;
-        if (this.imageContainer) {
-          this.imageContainer.style.cursor = 'grab';
-        }
-        if (this.overlay) {
-          this.overlay.style.cursor = 'grab';
-        }
-        this.cleanupDragEvents();
-      }
-    };
-
-    this.imageContainer.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      this.state.isDragging = true;
-      this.state.dragStartX = e.clientX;
-      this.state.dragStartY = e.clientY;
-      this.state.imageStartX = this.state.x;
-      this.state.imageStartY = this.state.y;
-
-      if (this.imageContainer) {
-        this.imageContainer.style.cursor = 'grabbing';
-      }
-      if (this.overlay) {
-        this.overlay.style.cursor = 'grabbing';
-      }
-
-      // 添加事件监听器
-      if (this.dragHandler && this.mouseUpHandler) {
-        document.addEventListener('mousemove', this.dragHandler, { passive: true });
-        document.addEventListener('mouseup', this.mouseUpHandler, { once: true });
-      }
-    });
-  }
-
-  // 清理拖动事件监听器
-  private cleanupDragEvents(): void {
-    if (this.dragHandler) {
-      document.removeEventListener('mousemove', this.dragHandler);
-    }
-    if (this.mouseUpHandler) {
-      document.removeEventListener('mouseup', this.mouseUpHandler);
-    }
-  }
-
-  // 绑定全局事件
   private bindEvents(): void {
     this.delegationHandler = (e: Event) => {
-      if (!this.overlay) return;
+      if (e.type === 'mousemove') {
+        const mouseEvent = e as MouseEvent;
+        if (this.state.isDragging) {
+          this.state.x =
+            this.state.imageStartX + (mouseEvent.clientX - this.state.dragStartX);
+          this.state.y =
+            this.state.imageStartY + (mouseEvent.clientY - this.state.dragStartY);
 
-      if (e.type === 'keydown' && this.options.enableKeyboard) {
+          if (!this.pendingUpdate) {
+            this.pendingUpdate = true;
+            this.animationFrameId = requestAnimationFrame(() => {
+              this.updateImageTransform();
+              this.pendingUpdate = false;
+            });
+          }
+        }
+      } else if (e.type === 'mouseup') {
+        this.state.isDragging = false;
+        document.body.style.cursor = '';
+      } else if (e.type === 'keydown' && this.options.enableKeyboard) {
         const keyboardEvent = e as KeyboardEvent;
         switch (keyboardEvent.key) {
-          case 'Escape':
-            this.close();
-            break;
           case '+':
           case '=':
             keyboardEvent.preventDefault();
@@ -314,7 +237,48 @@ export class ImageViewer {
     });
   }
 
-  // 放大
+  private onMouseDown(event: MouseEvent): void {
+    event.preventDefault();
+    this.state.isDragging = true;
+    this.state.dragStartX = event.clientX;
+    this.state.dragStartY = event.clientY;
+    this.state.imageStartX = this.state.x;
+    this.state.imageStartY = this.state.y;
+    document.body.style.cursor = 'grabbing';
+
+    this.dragHandler = (moveEvent: MouseEvent) => {
+      moveEvent.preventDefault();
+      if (this.state.isDragging) {
+        this.state.x =
+          this.state.imageStartX + (moveEvent.clientX - this.state.dragStartX);
+        this.state.y =
+          this.state.imageStartY + (moveEvent.clientY - this.state.dragStartY);
+        this.updateImageTransform();
+      }
+    };
+
+    this.mouseUpHandler = () => {
+      this.state.isDragging = false;
+      document.body.style.cursor = '';
+      this.cleanupDragEvents();
+    };
+
+    document.addEventListener('mousemove', this.dragHandler);
+    document.addEventListener('mouseup', this.mouseUpHandler);
+  }
+
+  private cleanupDragEvents(): void {
+    if (this.dragHandler) {
+      document.removeEventListener('mousemove', this.dragHandler);
+      this.dragHandler = null;
+    }
+    if (this.mouseUpHandler) {
+      document.removeEventListener('mouseup', this.mouseUpHandler);
+      this.mouseUpHandler = null;
+    }
+  }
+
+  // Zoom in by one step.
   private zoomIn(): void {
     this.state.zoom = Math.min(
       this.state.zoom + this.options.zoomStep,
@@ -323,7 +287,7 @@ export class ImageViewer {
     this.updateImageTransform();
   }
 
-  // 缩小
+  // Zoom out by one step.
   private zoomOut(): void {
     this.state.zoom = Math.max(
       this.state.zoom - this.options.zoomStep,
@@ -332,7 +296,7 @@ export class ImageViewer {
     this.updateImageTransform();
   }
 
-  // 重置状态
+  // Reset zoom and position.
   private resetState(): void {
     this.state.zoom = 1;
     this.state.x = 0;
@@ -340,7 +304,7 @@ export class ImageViewer {
     this.updateImageTransform();
   }
 
-  // 更新图片变换
+  // Apply the transform to the image container.
   private updateImageTransform(): void {
     if (!this.imageContainer) return;
     this.imageContainer.style.transform = `
@@ -351,7 +315,7 @@ export class ImageViewer {
 
   private styleElement: HTMLStyleElement | null = null;
 
-  // 添加样式
+  // Inject viewer styles once.
   private addStyles(): void {
     if (!this.styleElement) {
       this.styleElement = document.createElement('style');
@@ -400,7 +364,7 @@ export class ImageViewer {
     }
   }
 
-  // 移除样式
+  // Remove injected styles.
   private removeStyles(): void {
     if (this.styleElement) {
       document.head.removeChild(this.styleElement);
@@ -408,7 +372,7 @@ export class ImageViewer {
     }
   }
 
-  // 销毁实例
+  // Tear down the viewer completely.
   destroy(): void {
     this.close();
     this.removeStyles();

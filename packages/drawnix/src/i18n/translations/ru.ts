@@ -9,6 +9,8 @@ const ruTranslations: Translations = {
   'toolbar.arrow': 'Стрелка — A',
   'toolbar.shape': 'Фигуры',
   'toolbar.image': 'Изображение — Cmd+U',
+  'toolbar.newCanvas': 'New Canvas',
+  'toolbar.saveAs': 'Save As…',
   'toolbar.extraTools': 'Дополнительно',
 
   'toolbar.pen': 'Карандаш — P',
@@ -67,7 +69,7 @@ const ruTranslations: Translations = {
   
   // Language
   'language.switcher': 'Language',
-  'language.chinese': '中文',
+  'language.chinese': 'Chinese',
   'language.english': 'English',
   'language.russian': 'Русский',
   'language.arabic': 'عربي',
@@ -82,7 +84,7 @@ const ruTranslations: Translations = {
   'menu.github': 'GitHub',
   
   // Dialog translations
-  'dialog.mermaid.title': 'Mermaid в Drawnix',
+  'dialog.mermaid.title': 'Mermaid в Monet-Drawing',
   'dialog.mermaid.description': 'Поддерживаются',
   'dialog.mermaid.flowchart': 'блок-схемы',
   'dialog.mermaid.sequence': 'диаграммы последовательностей', 
@@ -104,8 +106,8 @@ const ruTranslations: Translations = {
   'dialog.error.loadMermaid': 'Не удалось загрузить библотеку Mermaid',
   
   // Extra tools menu items
-  'extraTools.mermaidToDrawnix': 'Mermaid в Drawnix',
-  'extraTools.markdownToDrawnix': 'Markdown в Drawnix',
+  'extraTools.mermaidToDrawnix': 'Mermaid в Monet-Drawing',
+  'extraTools.markdownToDrawnix': 'Markdown в Monet-Drawing',
 
   // Clean confirm dialog
   'cleanConfirm.title': 'Очистить доску',

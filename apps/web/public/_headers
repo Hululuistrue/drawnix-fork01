@@ -1,4 +1,4 @@
-# 基本缓存配置
+# Cache configuration
 /*
   Cache-Control: public, max-age=31536000, immutable
 
