@@ -1,120 +1,77 @@
-<p align="center">
-  <picture style="width: 320px">
-    <source media="(prefers-color-scheme: light)" srcset="https://github.com/plait-board/drawnix/blob/develop/apps/web/public/logo/logo_drawnix_h.svg?raw=true" />
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/plait-board/drawnix/blob/develop/apps/web/public/logo/logo_drawnix_h_dark.svg?raw=true" />
-    <img src="https://github.com/plait-board/drawnix/blob/develop/apps/web/public/logo/logo_drawnix_h.svg?raw=true" width="360" alt="Drawnix logo and name" />
-  </picture>
-</p>
-<div align="center">
-  <h2>
-    Drawnix is an open-source whiteboard SaaS that combines mind maps, flowcharts, and freehand drawing.
-  <br />
-  </h2>
-</div>
+# Monet-Drawing
 
-<div align="center">
-  <figure>
-    <a target="_blank" rel="noopener">
-      <img src="https://github.com/plait-board/drawnix/blob/develop/apps/web/public/product_showcase/case-2.png" alt="Product showcase" width="80%" />
-    </a>
-    <figcaption>
-      <p align="center">
-        All-in-one whiteboard: mind mapping, flowcharts, freehand illustration.
-      </p>
-    </figcaption>
-  </figure>
-  <a href="https://hellogithub.com/repository/plait-board/drawnix" target="_blank">
-    <picture style="width: 250">
-      <source media="(prefers-color-scheme: light)" srcset="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=4dcea807fab7468a962c153b07ae4e4e&claim_uid=zmFSY5k8EuZri43&theme=neutral" />
-      <source media="(prefers-color-scheme: dark)" srcset="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=4dcea807fab7468a962c153b07ae4e4e&claim_uid=zmFSY5k8EuZri43&theme=dark" />
-      <img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=4dcea807fab7468a962c153b07ae4e4e&claim_uid=zmFSY5k8EuZri43&theme=neutral" alt="Featured on HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54"/>
-    </picture>
-  </a>
-
-  <br />
-
-  <a href="https://trendshift.io/repositories/13979" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13979" alt="plait-board/drawnix on Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-</div>
-
-[*English README*](https://github.com/plait-board/drawnix/blob/develop/README_en.md)
+Monet-Drawing is an open-source whiteboard that blends mind mapping, flowcharts, freehand sketching, and rapid exporting into a single browser experience. The project is built on top of the Nx toolchain with React 18, TypeScript, and Vite, and ships ready for static hosting.
 
 ## Highlights
+- Mind maps, flowcharts, and freehand drawing on an infinite canvas.
+- Plugin architecture powered by the Plait ecosystem (draw, mind, freehand, text).
+- Local autosave plus a one-click `Save As…` action that exports `.monet` snapshots.
+- Fresh toolbar actions for “New Canvas” (with confirmation) and “Save As…”.
+- Internationalised UI (EN, ZH, RU, AR) with a tutorial overlay for first-time users.
 
-- Free and open source
-- Mind maps, flowcharts, and freehand drawing in one workspace
-- Image uploads and media management
-- Plugin-based architecture for deep customization
-- Export to PNG, JPG, and JSON (`.drawnix`)
-- Automatic saving powered by browser storage
-- Rich editing features: undo, redo, copy, paste, and more
-- Infinite canvas with smooth zooming and panning
-- Multiple interface themes including dark mode
-- Mobile-friendly layout
-- Mermaid-to-flowchart conversion
-- Markdown-to-mind-map conversion (latest addition)
+## Quick Start
 
-## About the Name
+| Requirement | Version |
+|-------------|---------|
+| Node.js     | 18.x / 20.x |
+| npm         | 9+ |
 
-***Drawnix*** blends ***Draw*** with ***Phoenix***. The phoenix symbolizes creativity that never burns out, while drawing is one of the most direct forms of expression. Every sketch is a chance to rise again—Draw Beyond, Rise Above.
-
-## Powered by the Plait Drawing Framework
-
-Drawnix is built on the open-source Plait drawing framework, a core component of our knowledge base product [PingCode Wiki](https://pingcode.com/product/wiki?utm_source=drawnix). The plugin architecture embraces multiple UI frameworks (Angular, React) and rich-text editors (currently Slate), encouraging a layered structure and reusable plugins that adapt to new whiteboard scenarios.
-
-## Repository Structure
-
-```
-drawnix/
-├── apps/
-│   └── web                 # drawnix.com
-├── dist/                   # build artifacts
-├── packages/
-│   ├── drawnix             # whiteboard application core
-│   ├── react-board         # React view layer
-│   └── react-text          # text rendering module
-├── package.json
-├── ...
-└── README.md
-└── README_en.md
-```
-
-## Try It Online
-
-The hosted edition at [https://drawnix.com](https://drawnix.com) showcases the core Drawnix experience. We will continue shipping rapid updates until the **Dawn** release.
-
-## Development Setup
-
-```
+```bash
+# Install dependencies
 npm install
+
+# Start the dev server (http://localhost:7200 by default)
 npm run start
 ```
 
-## Docker Image
+### Useful scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run start` | Serve `apps/web` with Vite (Nx `serve web`). |
+| `npm run build` | Build all targets declared in the workspace. |
+| `npm run build:web` | Production build for the web app (outputs to `dist/apps/web`). |
+| `npm run lint` | Lint all projects with automatic fixes where possible. |
+| `npm run test` | Execute configured Nx test targets. |
+
+## Project Layout
 
 ```
-docker pull pubuzhixing/drawnix:latest
+.
+├── apps/
+│   └── web/                # Primary React application
+├── packages/
+│   ├── drawnix/            # Whiteboard components, plugins, i18n, data helpers
+│   ├── react-board/        # React bindings around the Plait board
+│   └── react-text/         # Text rendering utilities
+├── scripts/                # Release & publish helpers
+├── README.md
+└── package.json
 ```
 
-## Key Dependencies
+### Notable features
 
-- [plait](https://github.com/worktile/plait) — open-source drawing framework
-- [slate](https://github.com/ianstormtaylor/slate) — rich text editor framework
-- [floating-ui](https://github.com/floating-ui/floating-ui) — toolkit for floating UI elements
+- **Toolbar improvements** – The creation toolbar now includes “New Canvas” and “Save As…” buttons beside the existing tools. “Save As…” writes `.monet` (JSON) snapshots via the File System Access API.
+- **Autosave** – Board state persists to IndexedDB / LocalStorage automatically; refreshing keeps your latest canvas.
+- **Save As format** – Exports use `application/vnd.monet-drawing+json` with the `.monet` extension. Importing still accepts previous snapshots.
+- **Internationalisation** – Language strings live in `packages/drawnix/src/i18n/translations`. The Chinese pack reuses the English copy for consistency.
 
-## Contributing
+## Deployment
 
-We welcome bug reports, proposals, and pull requests of all sizes—every contribution helps Drawnix improve.
+Monet-Drawing produces static assets and can be deployed on any static host. For **Vercel**:
 
-## Acknowledgements
+1. Build command: `npm run build:web`
+2. Output directory: `dist/apps/web`
+3. (Optional) Environment variable: `NODE_VERSION=20`
 
-Thank you to everyone who supports this project and to our company for backing open-source work.
+For manual hosting, run `npm run build:web` and serve the contents of `dist/apps/web` from your CDN or web server.
 
-<p align="left">
-  <a href="https://pingcode.com?utm_source=drawnix" target="_blank">
-      <img src="https://cdn-aliyun.pingcode.com/static/site/img/pingcode-logo.4267e7b.svg" width="120" alt="PingCode" />
-  </a>
-</p>
+## Development Notes
+
+- This workspace is managed by **Nx**—use `npx nx graph` to explore project dependencies or `npx nx show project web --web` for target introspection.
+- The default tutorial overlay and headline copy are controlled through i18n keys such as `tutorial.title` and `tutorial.description`.
+- The toolbar icons live in `packages/drawnix/src/components/icons.tsx`. Custom actions can be registered in `packages/drawnix/src/components/toolbar/creation-toolbar.tsx`.
 
 ## License
 
-[MIT License](https://github.com/plait-board/drawnix/blob/master/LICENSE)
+Monet-Drawing is released under the [MIT License](LICENSE).
